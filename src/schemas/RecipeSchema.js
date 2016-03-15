@@ -1,14 +1,9 @@
 import { Schema } from 'mongoose';
 
 export default new Schema({
-  title:  String,
-  author: String,
-  body:   String,
-  comments: [{ body: String, date: Date }],
-  date: { type: Date, default: Date.now },
-  hidden: Boolean,
-  meta: {
-    votes: Number,
-    favs:  Number
-  }
+    title :  String,
+    author : String,
+    description :   String,
+    date : { type: Date, default: Date.now },
+    foodtype : String
 });

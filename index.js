@@ -6,6 +6,8 @@ const server = restify.createServer({
     name : 'avraam'
 });
 
+server.use( restify.queryParser() );
+server.use( restify.bodyParser() );
 
 Object.keys( routes ).forEach( route => {
     for( let r in routes[ route ] )
@@ -14,4 +16,4 @@ Object.keys( routes ).forEach( route => {
     }
 } );
 
-server.listen( 8080, connect );
+server.listen( 8081, connect );
