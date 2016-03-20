@@ -16,7 +16,7 @@ import {
 } from 'graphql';
 
 import CustomGraphQLDateType from 'graphql-custom-datetype';
-import { find }              from '../models/RecipeModel';
+import { find, create }      from '../controllers/RecipeController';
 
 const RecipeType = new GraphQLObjectType( {
     name        : 'Recipe',
@@ -40,7 +40,7 @@ const RecipeType = new GraphQLObjectType( {
         },
         date : {
             type        : CustomGraphQLDateType,
-            description : 'Date when the animation were created'
+            description : 'Date when the recipe were created'
         }
     } ),
 } );
@@ -62,6 +62,6 @@ const baseType = new GraphQLObjectType( {
     } )
 } );
 
-export const GraphQLAnimationSchema = new GraphQLSchema( {
+export const RecipeGraphQLSchema = new GraphQLSchema( {
     query : baseType
 } );

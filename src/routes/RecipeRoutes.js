@@ -1,24 +1,29 @@
-import { create, find } from '../models/RecipeModel';
+/**
+ * Server Routes
+ *
+ *  @author  Avraam Mavridis    <avr.mav@gmail.com>
+ *
+ */
 
+import { graphql }             from 'graphql';
+import { RecipeGraphQLSchema } from '../schemas/RecipeGraphQLSchema';
 
-const handleResponse = ( promise, res ) => {
-    promise.then( data => res.send( data ) )
-           .catch( err => res.send( err ) );
-}
+const requestBuilder = query => graphql( RecipeGraphQLSchema, query )
+
+const requestHandler = async function ( fn, res ) {
+    try {
+        const data = await fn;
+        res.send( data );
+    }
+    catch ( error )
+    {
+        res.send( error );
+    }
+};
 
 export default {
-    '/recipe' : {
-        post : ( req, res ) => {
-            handleResponse( create( req.body ), res );
-        },
-        get : ( req, res ) => {
-            handleResponse( find( {} ), res )
-        }
-    },
-    '/recipe/:name' : {
-        get : ( req, res ) => {
-            const { name } = req.params;
-            handleResponse( find( { name } ), res );
-        }
+    '/data' : {
+        post : ( req, res ) => requestHandler( requestBuilder( req.body ), res ),
+        get  : ( req, res ) => requestHandler( requestBuilder( req.query.graphql ), res )
     }
 };
